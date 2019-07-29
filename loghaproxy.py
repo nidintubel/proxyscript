@@ -32,18 +32,18 @@ a23=list()
 a24=list()
 a25=list()
 
-with open("/home/jakob/Skripte/haproxy.log.9", "r") as f:
-    for line in f:
-        if "gdata" in line:
-            continue
-        else:
-            matching = line.split()
-            if matching[2] >= "06:25:40" and matching[2] < "07:25:40" :
-                ip = matching[5].split(":")
-                ip0 = ip[0]
-                ipsplit = ip0.split(".")
+with open("/home/jakob/Skripte/haproxy.log.9", "r") as f:                   #Logfile einlesen
+    for line in f:                                                          #für jede Zeile im Logfile
+        if "gdata" in line:                                                 #wenn auf der Zeile der String gdata vorkommt
+            continue                                                        #springe sofort zur nächsten Zeile (gdata Einträge des Virenscanners sollen ausgelassen werden)
+        else:                                                               #sonst
+            matching = line.split()                                         #die Zeile des Logfiles in eine Liste matching schreiben
+            if matching[2] >= "06:25:40" and matching[2] < "07:25:40" :     #wenn der Zeiteintrag in der Liste matching an Position 2 zwischen den beiden Uhrzeiten ist
+                ip = matching[5].split(":")                                 #splitte den IP Eintrag der Liste matching an Position 5 beim Doppelpunkt (Die Portangabe soll weg)
+                ip0 = ip[0]                                                 #ip0 ist jetzt die Position 0 des gesplitteten IP Eintrags also nur noch die IP Adresse
+                ipsplit = ip0.split(".")                                    #splitte ip0 bei den Punkten um die Einzelbestandteile der IP Adresse zu erhalten
                 if ipsplit[0] == "172" and ipsplit[1] == "16" and len(ipsplit[2]) < 3 and ipsplit[2] !="0" and ipsplit[2] != "1" and ipsplit[2] != "2" : 
-                    a1.append(ip[0])
+                    a1.append(ip[0])                                        #alle IP Adressen die die obige Bedingung erfüllen werden in die Liste a1 geschrieben
             elif matching[2] >= "07:25:40" and matching[2] < "08:25:40" :
                 ip = matching[5].split(":")
                 ip0 = ip[0]
@@ -188,10 +188,10 @@ with open("/home/jakob/Skripte/haproxy.log.9", "r") as f:
 
 
 
-unique_a1=list()
-for x in a1:
-    if x not in unique_a1:
-        unique_a1.append(x)
+unique_a1=list()                                    #Liste unique_a1 wird deklariert
+for x in a1:                                        #für jeden Eintrag in der Liste a1
+    if x not in unique_a1:                          #wenn der Eintrag noch nicht in der neuen unique_a1 Liste steht
+        unique_a1.append(x)                         #füge den Eintrag auf die unique_a1 Liste hinzu
 
 unique_a2=list()
 for x in a2:
