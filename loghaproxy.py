@@ -6,7 +6,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 
-a1=list()
+a1=list()                                                                   #Deklaration der Listen die ich für jede auszuwertende Stunde verwenden werde
 a2=list()
 a3=list()
 a4=list()
@@ -32,12 +32,12 @@ a23=list()
 a24=list()
 a25=list()
 
-with open("/home/jakob/Skripte/haproxy.log.9", "r") as f:                   #Logfile einlesen
-    for line in f:                                                          #für jede Zeile im Logfile
+with open("/home/jakob/Skripte/haproxy.log.9", "r") as f:                   #Logfile einlesen, das "r" steht für read only Modus (statt w für write)
+    for line in f:                                                          #for Schleife für jede Zeile im Logfile
         if "gdata" in line:                                                 #wenn auf der Zeile der String gdata vorkommt
             continue                                                        #springe sofort zur nächsten Zeile (gdata Einträge des Virenscanners sollen ausgelassen werden)
         else:                                                               #sonst
-            matching = line.split()                                         #die Zeile des Logfiles in eine Liste matching schreiben
+            matching = line.split()                                         #die Einträge der Zeile des Logfiles in eine Liste matching schreiben
             if matching[2] >= "06:25:40" and matching[2] < "07:25:40" :     #wenn der Zeiteintrag in der Liste matching an Position 2 zwischen den beiden Uhrzeiten ist
                 ip = matching[5].split(":")                                 #splitte den IP Eintrag der Liste matching an Position 5 beim Doppelpunkt (Die Portangabe soll weg)
                 ip0 = ip[0]                                                 #ip0 ist jetzt die Position 0 des gesplitteten IP Eintrags also nur noch die IP Adresse
@@ -188,7 +188,7 @@ with open("/home/jakob/Skripte/haproxy.log.9", "r") as f:                   #Log
 
 
 
-unique_a1=list()                                    #Liste unique_a1 wird deklariert
+unique_a1=list()                                    #Liste unique_a1 wird deklariert, in dieser Liste sollen alle IP Einträge nur jeweils einmal vorkommen, mehrfach vorkommende IPs werden eliminiert
 for x in a1:                                        #für jeden Eintrag in der Liste a1
     if x not in unique_a1:                          #wenn der Eintrag noch nicht in der neuen unique_a1 Liste steht
         unique_a1.append(x)                         #füge den Eintrag auf die unique_a1 Liste hinzu
@@ -315,7 +315,7 @@ for x in a25:
         
 
 
-print"Zeit 06:25 - 07:25 --- " + str(len(unique_a1))
+print"Zeit 06:25 - 07:25 --- " + str(len(unique_a1))                        #len(listname) gibt die Anzahl der Listeneinträge an
 print"Zeit 07:25 - 08:25 --- " + str(len(unique_a2))
 print"Zeit 08:25 - 09:25 --- " + str(len(unique_a3))
 print"Zeit 09:25 - 10:25 --- " + str(len(unique_a4))
